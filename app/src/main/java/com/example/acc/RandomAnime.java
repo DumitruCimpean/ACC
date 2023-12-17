@@ -55,9 +55,9 @@ public class RandomAnime extends AppCompatActivity {
     private long pausedTime = 0;
     //                               v---- 5 minutes
     private long initialTimeMillis = 5  * 60 * 1000; // Initial time in milliseconds (5 minutes)
-    private int guessedCount;
-    private int skipCount;
-    private int drawnCount;
+    private int guessedCnt;
+    private int skipCnt;
+    private int drawnCnt;
     private Handler handler;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
@@ -88,9 +88,9 @@ public class RandomAnime extends AppCompatActivity {
         ultimateList = new ArrayList<>();
         usedList = new ArrayList<>();
         handler = new Handler();
-        guessedCount = 0;
-        skipCount = 0;
-        drawnCount = 0;
+        guessedCnt = 0;
+        skipCnt = 0;
+        drawnCnt = 0;
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         editor.putInt(RAcorrect, 0);
         editor.putInt(RAskip, 0);
@@ -132,17 +132,17 @@ public class RandomAnime extends AppCompatActivity {
 
         startBtn.setOnClickListener(v -> {
             showScorePicker();
-            drawnCount++;
-            editor.putInt(RAdrawn, drawnCount);
+            drawnCnt++;
+            editor.putInt(RAdrawn, drawnCnt);
             editor.apply();
         });
 
         correct.setOnClickListener(v -> {
            hideScorePicker();
-            guessedCount++;
-            editor.putInt(RAcorrect, guessedCount);
+            guessedCnt++;
+            editor.putInt(RAcorrect, guessedCnt);
             editor.apply();
-            scoreText.setText("Score: " + guessedCount);
+            scoreText.setText("Score: " + guessedCnt);
             reroll(usedList);
         });
 
@@ -169,8 +169,8 @@ public class RandomAnime extends AppCompatActivity {
         } else if (i[0] == 0){
             reshuffle(theList);
         }
-        skipCount++;
-        editor.putInt(RAskip, skipCount);
+        skipCnt++;
+        editor.putInt(RAskip, skipCnt);
         editor.apply();
     }
     private void reshuffle(ArrayList<String> theList) {
@@ -257,12 +257,12 @@ public class RandomAnime extends AppCompatActivity {
     }
 
     private void resetValues(){
-        guessedCount = drawnCount = skipCount = 0;
+        guessedCnt = drawnCnt = skipCnt = 0;
         editor.putInt(RAcorrect, 0);
         editor.putInt(RAdrawn, 0);
         editor.putInt(RAskip, 0);
         editor.apply();
-        scoreText.setText("Score: " + guessedCount);
+        scoreText.setText("Score: " + guessedCnt);
     }
 
     /////////////////////////////////////// UNUSED CODE FOR NOW ////////////////////////////////////

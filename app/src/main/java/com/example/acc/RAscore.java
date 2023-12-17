@@ -30,13 +30,21 @@ public class RAscore extends AppCompatActivity {
         guessedCount = findViewById(R.id.guessedCount);
         drawnCount = findViewById(R.id.drawnCount);
         skippedCount = findViewById(R.id.skippedCount);
-
-        guessedCount.setText(String.valueOf(correct));
-        drawnCount.setText(String.valueOf(drawn));
-        skippedCount.setText(String.valueOf(skip));
-
         Button nextMatch = findViewById(R.id.nextMatch);
-        nextMatch.setOnClickListener(v -> finish());
+
+        if (guessedCount != null){
+            guessedCount.setText(String.valueOf(correct));
+        }
+        if(drawnCount != null){
+            drawnCount.setText(String.valueOf(drawn));
+        }
+        if(skippedCount != null){
+            skippedCount.setText(String.valueOf(skip));
+        }
+
+        if (nextMatch != null){
+            nextMatch.setOnClickListener(v -> finish());
+        }
 
     }
 }
