@@ -127,6 +127,7 @@ public class RandomAnime extends AppCompatActivity {
         });
 
         rerollBtn.setOnClickListener(v -> {
+            startBtn.setVisibility(View.VISIBLE);
             reroll(usedList);
         });
 
@@ -218,7 +219,6 @@ public class RandomAnime extends AppCompatActivity {
         editBtn.setVisibility(View.VISIBLE);
         endBtn.setVisibility(View.VISIBLE);
         rerollBtn.setVisibility(View.VISIBLE);
-        startBtn.setVisibility(View.VISIBLE);
         animeChosen.setVisibility(View.VISIBLE);
         scoreText.setVisibility(View.VISIBLE);
         ultimateBtn.setVisibility(View.GONE);
