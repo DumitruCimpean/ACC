@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ACC" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/dark_gray</item>
+        <item name="colorPrimary">@color/dark_gray</item>
+        <item name="colorSecondary">@color/acc.yellow</item>
+        <item name="colorTertiary">@color/acc.red_light</item>
+
+    </style>
+
+    <style name="Theme.ACC" parent="Base.Theme.ACC" />
+</resources>
