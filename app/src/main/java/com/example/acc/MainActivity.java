@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         MyGlobals gob = new MyGlobals(this);
 
         Button randomAnime = findViewById(R.id.ranAnimOpenBtn);
-        randomAnime.setOnClickListener(v -> gob.openActivity(RandomAnime.class));
+        randomAnime.setOnClickListener(v -> gob.openActivity(TeamName.class));
 
     }
 }

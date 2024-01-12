@@ -5,13 +5,17 @@ import static com.example.acc.MainActivity.RAdrawn;
 import static com.example.acc.MainActivity.RAskip;
 import static com.example.acc.MainActivity.prefsName;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AlertDialogLayout;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -81,7 +85,7 @@ public class RandomAnime extends AppCompatActivity {
         scoreText = findViewById(R.id.scoreText);
         orText = findViewById(R.id.orText);
         rerollBtn = findViewById(R.id.reroll);
-        startBtn = findViewById(R.id.timerStart);
+        startBtn = findViewById(R.id.drawStart);
         correct = findViewById(R.id.correct);
         wrong = findViewById(R.id.wrong);
         userList = new ArrayList<>();
@@ -117,7 +121,7 @@ public class RandomAnime extends AppCompatActivity {
         });
 
         editBtn.setOnClickListener(v -> {
-            showEditMenu();
+            showEditConfirmation();
         });
 
         endBtn.setOnClickListener(v -> {
@@ -263,6 +267,24 @@ public class RandomAnime extends AppCompatActivity {
         editor.putInt(RAskip, 0);
         editor.apply();
         scoreText.setText("Score: " + guessedCnt);
+    }
+
+    private void showEditConfirmation() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_edit_confirm, null);
+        builder.setView(dialogView);
+
+        Button yesBtn = dialogView.findViewById(R.id.yesDiag);
+        Button noBtn = dialogView.findViewById(R.id.noDiag);
+        AlertDialog dialog = builder.create();
+
+        noBtn.setOnClickListener(v -> dialog.dismiss());
+        yesBtn.setOnClickListener(v-> {
+            showEditMenu();
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 
     /////////////////////////////////////// UNUSED CODE FOR NOW ////////////////////////////////////

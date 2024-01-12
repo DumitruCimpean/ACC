@@ -16,6 +16,9 @@
         android:theme="@style/Theme.ACC"
         tools:targetApi="31">
         <activity
+            android:name=".TeamName"
+            android:exported="false" />
+        <activity
             android:name=".RAscore"
             android:exported="false" />
         <activity

@@ -93,7 +93,7 @@
         android:text="or"
         android:textAlignment="center"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/timerStart"
+        app:layout_constraintBottom_toTopOf="@id/drawStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +149,7 @@
         app:layout_constraintVertical_bias="0.734" />
 
     <Button
-        android:id="@+id/timerStart"
+        android:id="@+id/drawStart"
         android:layout_width="210dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/green"

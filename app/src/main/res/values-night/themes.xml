@@ -7,4 +7,9 @@
         <item name="colorTertiary">@color/acc.red_light</item>
 
     </style>
+    <style name="Theme.ACC" parent="Base.Theme.ACC" />
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:background">@color/dark_gray</item>
+    </style>
 </resources>
