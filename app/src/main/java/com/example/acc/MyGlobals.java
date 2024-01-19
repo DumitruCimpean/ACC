@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 public class MyGlobals extends Activity {
     Context mContext;
@@ -43,6 +44,11 @@ public class MyGlobals extends Activity {
     public void openActivityWithExtraInt(Class className, String stringKey, int value) {
         Intent intent = new Intent(mContext, className);
         intent.putExtra(stringKey, value);
+        mContext.startActivity(intent);
+
+    }public void openActivityWithExtraMap(Class className, String stringKey, HashMap<String,Integer> map) {
+        Intent intent = new Intent(mContext, className);
+        intent.putExtra(stringKey, map);
         mContext.startActivity(intent);
     }
 

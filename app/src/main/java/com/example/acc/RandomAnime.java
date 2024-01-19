@@ -75,6 +75,7 @@ public class RandomAnime extends AppCompatActivity {
         prefs = getSharedPreferences(prefsName, MODE_PRIVATE);
         editor = prefs.edit();
         gob = new MyGlobals(this);
+        boolean raScoreOpened = prefs.getBoolean("raOpened", false);
 
         processBtn = findViewById(R.id.processBtn);
         ultimateBtn = findViewById(R.id.ultimateBtn);
@@ -125,9 +126,12 @@ public class RandomAnime extends AppCompatActivity {
         });
 
         endBtn.setOnClickListener(v -> {
-            gob.openActivity(RAscore.class);
+            if (!raScoreOpened){
+                gob.openActivity(RAscore.class);
+            }
             showEditMenu();
             endBtn.setVisibility(View.GONE);
+            finish();
         });
 
         rerollBtn.setOnClickListener(v -> {
