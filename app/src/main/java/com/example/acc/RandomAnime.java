@@ -62,6 +62,7 @@ public class RandomAnime extends AppCompatActivity {
     private int guessedCnt;
     private int skipCnt;
     private int drawnCnt;
+    boolean raScoreOpened;
     private Handler handler;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
@@ -75,7 +76,7 @@ public class RandomAnime extends AppCompatActivity {
         prefs = getSharedPreferences(prefsName, MODE_PRIVATE);
         editor = prefs.edit();
         gob = new MyGlobals(this);
-        boolean raScoreOpened = prefs.getBoolean("raOpened", false);
+        raScoreOpened = prefs.getBoolean("raOpened", false);
 
         processBtn = findViewById(R.id.processBtn);
         ultimateBtn = findViewById(R.id.ultimateBtn);
@@ -126,12 +127,7 @@ public class RandomAnime extends AppCompatActivity {
         });
 
         endBtn.setOnClickListener(v -> {
-            if (!raScoreOpened){
-                gob.openActivity(RAscore.class);
-            }
-            showEditMenu();
-            endBtn.setVisibility(View.GONE);
-            finish();
+           showEndConfirmation();
         });
 
         rerollBtn.setOnClickListener(v -> {
@@ -286,6 +282,33 @@ public class RandomAnime extends AppCompatActivity {
         noBtn.setOnClickListener(v -> dialog.dismiss());
         yesBtn.setOnClickListener(v-> {
             showEditMenu();
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    private void showEndConfirmation() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_edit_confirm, null);
+        builder.setView(dialogView);
+
+        TextView title = dialogView.findViewById(R.id.titleDiag);
+        TextView subtitle = dialogView.findViewById(R.id.subtitleDiag);
+        Button yesBtn = dialogView.findViewById(R.id.yesDiag);
+        Button noBtn = dialogView.findViewById(R.id.noDiag);
+        AlertDialog dialog = builder.create();
+
+        title.setText("End the round?");
+        subtitle.setText("The current score will be saved for this team");
+        noBtn.setOnClickListener(v -> dialog.dismiss());
+        yesBtn.setOnClickListener(v-> {
+            if (!raScoreOpened){
+                gob.openActivity(RAscore.class);
+            }
+            showEditMenu();
+            endBtn.setVisibility(View.GONE);
+            finish();
             dialog.dismiss();
         });
         dialog.show();
