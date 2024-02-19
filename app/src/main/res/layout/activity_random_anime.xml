@@ -24,8 +24,8 @@
         android:id="@+id/animeChosen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
         android:text="Press Re-roll to start"
         android:textAlignment="center"
@@ -115,23 +115,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/correct"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/rectangle"
-        android:backgroundTint="@color/green"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/check_mark"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.299"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.734" />
-
-    <ImageButton
         android:id="@+id/wrong"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -143,10 +126,38 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.698"
+        app:layout_constraintHorizontal_bias="0.712"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.734" />
+        app:layout_constraintVertical_bias="0.911" />
+
+    <ImageButton
+        android:id="@+id/correct"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/rectangle"
+        android:backgroundTint="@color/green"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/check_mark"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.311"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.911" />
+
+    <ImageView
+        android:id="@+id/imgIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/drawStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animeChosen"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/drawStart"
@@ -201,8 +212,8 @@
         android:layout_height="40dp"
         android:background="@drawable/rectangle"
         android:backgroundTint="@color/red"
-        android:scaleType="fitCenter"
         android:padding="4dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/stop"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

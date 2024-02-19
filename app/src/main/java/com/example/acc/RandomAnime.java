@@ -7,8 +7,6 @@ import static com.example.acc.MainActivity.prefsName;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AlertDialogLayout;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import jxl.Sheet;
@@ -43,6 +42,7 @@ public class RandomAnime extends AppCompatActivity {
     private TextView orText;
     private Button rerollBtn;
     private Button startBtn;
+    private ImageView animeImg;
     private ImageButton correct;
     private ImageButton wrong;
     private ArrayList<String> userList;
@@ -88,6 +88,7 @@ public class RandomAnime extends AppCompatActivity {
         orText = findViewById(R.id.orText);
         rerollBtn = findViewById(R.id.reroll);
         startBtn = findViewById(R.id.drawStart);
+        animeImg = findViewById(R.id.imgIndicator);
         correct = findViewById(R.id.correct);
         wrong = findViewById(R.id.wrong);
         userList = new ArrayList<>();
@@ -224,6 +225,7 @@ public class RandomAnime extends AppCompatActivity {
         endBtn.setVisibility(View.VISIBLE);
         rerollBtn.setVisibility(View.VISIBLE);
         animeChosen.setVisibility(View.VISIBLE);
+        animeImg.setVisibility(View.VISIBLE);
         scoreText.setVisibility(View.VISIBLE);
         ultimateBtn.setVisibility(View.GONE);
         orText.setVisibility(View.GONE);
@@ -236,6 +238,7 @@ public class RandomAnime extends AppCompatActivity {
         rerollBtn.setVisibility(View.GONE);
         startBtn.setVisibility(View.GONE);
         animeChosen.setVisibility(View.GONE);
+        animeImg.setVisibility(View.GONE);
         scoreText.setVisibility(View.GONE);
         ultimateBtn.setVisibility(View.VISIBLE);
         orText.setVisibility(View.VISIBLE);
@@ -272,7 +275,7 @@ public class RandomAnime extends AppCompatActivity {
     private void showEditConfirmation() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.layout_edit_confirm, null);
+        View dialogView = inflater.inflate(R.layout.diag_layout_confirm, null);
         builder.setView(dialogView);
 
         Button yesBtn = dialogView.findViewById(R.id.yesDiag);
@@ -290,7 +293,7 @@ public class RandomAnime extends AppCompatActivity {
     private void showEndConfirmation() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.layout_edit_confirm, null);
+        View dialogView = inflater.inflate(R.layout.diag_layout_confirm, null);
         builder.setView(dialogView);
 
         TextView title = dialogView.findViewById(R.id.titleDiag);
