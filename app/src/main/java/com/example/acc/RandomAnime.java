@@ -7,10 +7,12 @@ import static com.example.acc.MainActivity.prefsName;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import java.util.Collections;
 
 public class RandomAnime extends AppCompatActivity {
 
+    private MediaPlayer timerSound;
     private Button processBtn;
     private Button ultimateBtn;
     private ImageButton editBtn;
@@ -40,7 +43,9 @@ public class RandomAnime extends AppCompatActivity {
     private TextView animeChosen;
     private TextView scoreText;
     private TextView orText;
+    private TextView timerText;
     private Button rerollBtn;
+    private SwitchCompat toggleTimer;
     private Button startBtn;
     private ImageView animeImg;
     private ImageButton correct;
@@ -57,8 +62,8 @@ public class RandomAnime extends AppCompatActivity {
     private boolean isPaused = false;
     private long startTime = 0;
     private long pausedTime = 0;
-    //                               v---- 5 minutes
-    private long initialTimeMillis = 5  * 60 * 1000; // Initial time in milliseconds (5 minutes)
+    //                               v---- 3 minutes
+    private long initialTimeMillis = 3  * 60 * 1000; // Initial time in milliseconds (3 minutes)
     private int guessedCnt;
     private int skipCnt;
     private int drawnCnt;
@@ -78,6 +83,7 @@ public class RandomAnime extends AppCompatActivity {
         gob = new MyGlobals(this);
         raScoreOpened = prefs.getBoolean("raOpened", false);
 
+        timerSound = MediaPlayer.create(this, R.raw.stinky);
         processBtn = findViewById(R.id.processBtn);
         ultimateBtn = findViewById(R.id.ultimateBtn);
         editBtn = findViewById(R.id.editBtn);
@@ -85,9 +91,11 @@ public class RandomAnime extends AppCompatActivity {
         inputBox = findViewById(R.id.aniListInput);
         animeChosen = findViewById(R.id.animeChosen);
         scoreText = findViewById(R.id.scoreText);
+        timerText = findViewById(R.id.timerText);
         orText = findViewById(R.id.orText);
         rerollBtn = findViewById(R.id.reroll);
         startBtn = findViewById(R.id.drawStart);
+        toggleTimer = findViewById(R.id.toggleTimer);
         animeImg = findViewById(R.id.imgIndicator);
         correct = findViewById(R.id.correct);
         wrong = findViewById(R.id.wrong);
@@ -96,11 +104,11 @@ public class RandomAnime extends AppCompatActivity {
         usedList = new ArrayList<>();
         handler = new Handler();
         guessedCnt = 0;
-        skipCnt = 0;
+        skipCnt = -1;
         drawnCnt = 0;
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         editor.putInt(RAcorrect, 0);
-        editor.putInt(RAskip, 0);
+        editor.putInt(RAskip, -1);
         editor.putInt(RAdrawn, 0);
         editor.apply();
 
@@ -134,6 +142,10 @@ public class RandomAnime extends AppCompatActivity {
         rerollBtn.setOnClickListener(v -> {
             startBtn.setVisibility(View.VISIBLE);
             reroll(usedList);
+            startStopwatch();
+            skipCnt++;
+            editor.putInt(RAskip, skipCnt);
+            editor.apply();
         });
 
         startBtn.setOnClickListener(v -> {
@@ -168,16 +180,12 @@ public class RandomAnime extends AppCompatActivity {
     }
 
     private void reroll(ArrayList<String> theList){
-        pauseStopwatch();
         if (theList.size() >= 1 && i[0] > 0){
             i[0]--;
             animeChosen.setText(theList.get(i[0]));
         } else if (i[0] == 0){
             reshuffle(theList);
         }
-        skipCnt++;
-        editor.putInt(RAskip, skipCnt);
-        editor.apply();
     }
     private void reshuffle(ArrayList<String> theList) {
         // shuffle the list
@@ -229,6 +237,7 @@ public class RandomAnime extends AppCompatActivity {
         scoreText.setVisibility(View.VISIBLE);
         ultimateBtn.setVisibility(View.GONE);
         orText.setVisibility(View.GONE);
+        toggleTimer.setVisibility(View.GONE);
     }
 
     private void showEditMenu(){
@@ -242,6 +251,7 @@ public class RandomAnime extends AppCompatActivity {
         scoreText.setVisibility(View.GONE);
         ultimateBtn.setVisibility(View.VISIBLE);
         orText.setVisibility(View.VISIBLE);
+        toggleTimer.setVisibility(View.VISIBLE);
         correct.setVisibility(View.GONE);
         wrong.setVisibility(View.GONE);
         pauseStopwatch();
@@ -264,10 +274,11 @@ public class RandomAnime extends AppCompatActivity {
     }
 
     private void resetValues(){
-        guessedCnt = drawnCnt = skipCnt = 0;
+        guessedCnt = drawnCnt = 0;
+        skipCnt = -1;
         editor.putInt(RAcorrect, 0);
         editor.putInt(RAdrawn, 0);
-        editor.putInt(RAskip, 0);
+        editor.putInt(RAskip, -1);
         editor.apply();
         scoreText.setText("Score: " + guessedCnt);
     }
@@ -317,7 +328,7 @@ public class RandomAnime extends AppCompatActivity {
         dialog.show();
     }
 
-    /////////////////////////////////////// UNUSED CODE FOR NOW ////////////////////////////////////
+    /////////////////////////////////////// TIMER CODE ////////////////////////////////////
 
     private final Runnable updateTimerRunnable = new Runnable() {
         @Override
@@ -326,9 +337,15 @@ public class RandomAnime extends AppCompatActivity {
             long elapsedMillis = currentTime - startTime;
             long remainingTimeMillis = initialTimeMillis - elapsedMillis;
 
-            if (remainingTimeMillis <= 0) {
+            if (remainingTimeMillis < 0) {
                 // Timer reached zero or negative, stop the timer
                 stopStopwatch();
+                timerText.setText("Out of Time!");
+                if (timerSound != null){
+                    if (toggleTimer.isChecked()) {
+                        timerSound.start();
+                    }
+                }
             } else {
                 updateTimerDisplay(remainingTimeMillis);
                 handler.postDelayed(this, 1000);
@@ -343,12 +360,15 @@ public class RandomAnime extends AppCompatActivity {
                 isPaused = false;
             } else {
                 startTime = System.currentTimeMillis();
+                if (toggleTimer.isChecked()) {
+                    timerText.setVisibility(View.VISIBLE);
+                }
             }
 
             handler.postDelayed(updateTimerRunnable, 0);
             isRunning = true;
-            startBtn.setEnabled(false);
-            rerollBtn.setEnabled(true);
+            // startBtn.setEnabled(false);
+            // rerollBtn.setEnabled(true);
         }
     }
 
@@ -358,7 +378,7 @@ public class RandomAnime extends AppCompatActivity {
             isRunning = false;
             isPaused = true;
             pausedTime = System.currentTimeMillis();
-            startBtn.setEnabled(true);
+            // startBtn.setEnabled(true);
         }
     }
 
@@ -366,7 +386,7 @@ public class RandomAnime extends AppCompatActivity {
         if (isRunning) {
             handler.removeCallbacks(updateTimerRunnable);
             isRunning = false;
-            startBtn.setEnabled(true);
+            // startBtn.setEnabled(true);
         }
     }
 
@@ -378,7 +398,7 @@ public class RandomAnime extends AppCompatActivity {
         minutes %= 60;
 
         String timeString = String.format("%02d:%02d", minutes, seconds);
-        //timerText.setText(timeString);
+        timerText.setText(timeString);
     }
 
 

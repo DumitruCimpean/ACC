@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Board">
 
-    <!-- TODO: Some styling someday, for the whole app -->
+    <!-- TODO: More styling someday, for the whole app -->
 
     <TextView
         android:id="@+id/boardTitle"

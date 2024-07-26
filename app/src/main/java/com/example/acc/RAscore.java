@@ -45,7 +45,7 @@ public class RAscore extends AppCompatActivity {
 
         correct = prefs.getInt(RAcorrect, 0);
         drawn = prefs.getInt(RAdrawn, 0);
-        skip = prefs.getInt(RAskip, 0);
+        skip = prefs.getInt(RAskip, -1);
 
         guessedCount = findViewById(R.id.guessedCount);
         drawnCount = findViewById(R.id.drawnCount);

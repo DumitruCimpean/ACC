@@ -40,6 +40,22 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:id="@+id/timerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="03:00"
+        android:textColor="@color/acc.red_dark"
+        android:textSize="50sp"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animeChosen"
+        app:layout_constraintVertical_bias="0.061" />
+
+    <TextView
         android:id="@+id/scoreText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,6 +130,27 @@
         app:layout_constraintTop_toBottomOf="@+id/orText"
         app:layout_constraintVertical_bias="0.0" />
 
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/toggleTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/rectangle"
+        android:backgroundTint="@color/darker_gray"
+        android:checked="true"
+        android:padding="15dp"
+        android:text="Toggle timer"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ultimateBtn"
+        app:layout_constraintVertical_bias="0.092"
+        app:thumbTint="@color/switch_thumb_color"
+        app:trackTint="@color/switch_track_color" />
+
     <ImageButton
         android:id="@+id/wrong"
         android:layout_width="60dp"
@@ -152,6 +189,7 @@
         android:id="@+id/imgIndicator"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/drawStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
