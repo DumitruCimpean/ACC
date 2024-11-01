@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import jxl.Sheet;
@@ -46,6 +48,8 @@ public class RandomAnime extends AppCompatActivity {
     private TextView timerText;
     private Button rerollBtn;
     private SwitchCompat toggleTimer;
+    private NumberPicker timePicker;
+    private LinearLayout timeSelectLayout;
     private Button startBtn;
     private ImageView animeImg;
     private ImageButton correct;
@@ -58,12 +62,14 @@ public class RandomAnime extends AppCompatActivity {
     final int[] i = {0};
     private InputMethodManager imm;
 
+    private boolean tToggleChecked = true;
     private boolean isRunning = false;
     private boolean isPaused = false;
     private long startTime = 0;
     private long pausedTime = 0;
     //                               v---- 3 minutes
-    private long initialTimeMillis = 3  * 60 * 1000; // Initial time in milliseconds (3 minutes)
+    private long selectedTime = 0;
+    private long initialTimeMillis; // Initial time in milliseconds (3 minutes)
     private int guessedCnt;
     private int skipCnt;
     private int drawnCnt;
@@ -96,6 +102,7 @@ public class RandomAnime extends AppCompatActivity {
         rerollBtn = findViewById(R.id.reroll);
         startBtn = findViewById(R.id.drawStart);
         toggleTimer = findViewById(R.id.toggleTimer);
+        timeSelectLayout = findViewById(R.id.timeSelectLayout);
         animeImg = findViewById(R.id.imgIndicator);
         correct = findViewById(R.id.correct);
         wrong = findViewById(R.id.wrong);
@@ -111,6 +118,11 @@ public class RandomAnime extends AppCompatActivity {
         editor.putInt(RAskip, -1);
         editor.putInt(RAdrawn, 0);
         editor.apply();
+
+        timePicker = findViewById(R.id.timePicker);
+        timePicker.setMaxValue(30);
+        timePicker.setMinValue(1);
+        timePicker.setValue(3);
 
 
         addExcelToList();
@@ -176,6 +188,18 @@ public class RandomAnime extends AppCompatActivity {
 
             hideEditMenu();
             resetValues();
+            selectedTime = timePicker.getValue();
+            initialTimeMillis = selectedTime  * 60 * 1000;
+        });
+
+        toggleTimer.setOnClickListener(v -> {
+            if (tToggleChecked){
+                timeSelectLayout.setVisibility(View.GONE);
+                tToggleChecked = false;
+            }else{
+                timeSelectLayout.setVisibility(View.VISIBLE);
+                tToggleChecked = true;
+            }
         });
     }
 
@@ -238,6 +262,7 @@ public class RandomAnime extends AppCompatActivity {
         ultimateBtn.setVisibility(View.GONE);
         orText.setVisibility(View.GONE);
         toggleTimer.setVisibility(View.GONE);
+        timeSelectLayout.setVisibility(View.GONE);
     }
 
     private void showEditMenu(){
@@ -252,6 +277,7 @@ public class RandomAnime extends AppCompatActivity {
         ultimateBtn.setVisibility(View.VISIBLE);
         orText.setVisibility(View.VISIBLE);
         toggleTimer.setVisibility(View.VISIBLE);
+        timeSelectLayout.setVisibility(View.VISIBLE);
         correct.setVisibility(View.GONE);
         wrong.setVisibility(View.GONE);
         pauseStopwatch();

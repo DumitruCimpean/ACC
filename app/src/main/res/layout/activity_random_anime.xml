@@ -44,9 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="03:00"
+        android:textAlignment="center"
         android:textColor="@color/acc.red_dark"
         android:textSize="50sp"
-        android:textAlignment="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,6 +150,38 @@
         app:layout_constraintVertical_bias="0.092"
         app:thumbTint="@color/switch_thumb_color"
         app:trackTint="@color/switch_track_color" />
+
+
+    <LinearLayout
+        android:id="@+id/timeSelectLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:visibility="visible"
+        android:background="@drawable/rectangle"
+        android:backgroundTint="@color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleTimer"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="Select Minutes"
+            android:textSize="20sp"/>
+
+        <NumberPicker
+            android:id="@+id/timePicker"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/wrong"
