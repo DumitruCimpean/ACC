@@ -140,7 +140,7 @@
         android:backgroundTint="@color/darker_gray"
         android:checked="true"
         android:padding="15dp"
-        android:text="Toggle timer"
+        android:text="Timer"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
